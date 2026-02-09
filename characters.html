@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving Day — Character Reference Samples</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #faf8f5;
+            color: #3a3a3a;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #5b7a6e 0%, #7a9e8e 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 1.5rem;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .intro {
+            max-width: 720px;
+            margin: 2rem auto;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            font-size: 1.05rem;
+            color: #555;
+        }
+
+        .character-section {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        .character-section h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #5b7a6e;
+            border-bottom: 2px solid #d4c9b8;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .character-section .description {
+            font-size: 0.95rem;
+            color: #777;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .samples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .sample {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .sample:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        .sample img {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: pointer;
+        }
+
+        .sample .label {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            background: #fafafa;
+            border-top: 1px solid #f0ece6;
+        }
+
+        .note {
+            max-width: 720px;
+            margin: 2rem auto 3rem;
+            padding: 1.5rem 2rem;
+            background: #f5f0e8;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .note strong {
+            color: #5b7a6e;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #aaa;
+            font-size: 0.85rem;
+            border-top: 1px solid #ece7df;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .samples {
+                grid-template-columns: 1fr;
+            }
+            header h1 { font-size: 1.6rem; }
+            .character-section h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Moving Day</h1>
+        <p>Character Reference Samples</p>
+    </header>
+
+    <div class="intro">
+        Hi Alex! Below are the character reference samples for <em>Moving Day</em>, 
+        illustrated in our warm watercolor storybook style. Each character has two 
+        samples showing different poses and expressions. Please take a look and let us 
+        know how you'd like to proceed!
+    </div>
+
+    <!-- IDA -->
+    <div class="character-section">
+        <h2>Ida</h2>
+        <p class="description">Based on the reference photo you shared</p>
+        <div class="samples">
+            <div class="sample">
+                <img src="characters/ida-sample-A.png" alt="Ida - Sample A" onclick="openLightbox(this)">
+                <div class="label">Sample A</div>
+            </div>
+            <div class="sample">
+                <img src="characters/ida-sample-B.png" alt="Ida - Sample B" onclick="openLightbox(this)">
+                <div class="label">Sample B</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOM -->
+    <div class="character-section">
+        <h2>Mom</h2>
+        <p class="description">Based on the reference photo you shared</p>
+        <div class="samples">
+            <div class="sample">
+                <img src="characters/mom-sample-A.png" alt="Mom - Sample A" onclick="openLightbox(this)">
+                <div class="label">Sample A</div>
+            </div>
+            <div class="sample">
+                <img src="characters/mom-sample-B.png" alt="Mom - Sample B" onclick="openLightbox(this)">
+                <div class="label">Sample B</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAD -->
+    <div class="character-section">
+        <h2>Dad</h2>
+        <p class="description">Illustrated to complement the family — let us know if you'd like any adjustments</p>
+        <div class="samples">
+            <div class="sample">
+                <img src="characters/dad-sample-A.png" alt="Dad - Sample A" onclick="openLightbox(this)">
+                <div class="label">Sample A</div>
+            </div>
+            <div class="sample">
+                <img src="characters/dad-sample-B.png" alt="Dad - Sample B" onclick="openLightbox(this)">
+                <div class="label">Sample B</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CC -->
+    <div class="character-section">
+        <h2>CC</h2>
+        <p class="description">Based on the reference photo you shared</p>
+        <div class="samples">
+            <div class="sample">
+                <img src="characters/cc-sample-A.png" alt="CC - Sample A" onclick="openLightbox(this)">
+                <div class="label">Sample A</div>
+            </div>
+            <div class="sample">
+                <img src="characters/cc-sample-B.png" alt="CC - Sample B" onclick="openLightbox(this)">
+                <div class="label">Sample B</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BIPPY -->
+    <div class="character-section">
+        <h2>Bippy</h2>
+        <p class="description">Refreshed in the unified watercolor style</p>
+        <div class="samples">
+            <div class="sample">
+                <img src="characters/bippy-sample-A.png" alt="Bippy - Sample A" onclick="openLightbox(this)">
+                <div class="label">Sample A</div>
+            </div>
+            <div class="sample">
+                <img src="characters/bippy-sample-B.png" alt="Bippy - Sample B" onclick="openLightbox(this)">
+                <div class="label">Sample B</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="note">
+        <strong>A quick note:</strong> These samples represent the overall look and feel for each character. 
+        Once you're happy with the direction, we'll use these as the foundation for every page in the book — 
+        ensuring a consistent, cohesive style throughout. If anything needs adjusting, just let us know!
+    </div>
+
+    <footer>
+        Moving Day — Illustrations by Sande Caplin & Associates
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        function openLightbox(el) {
+            document.getElementById('lightbox-img').src = el.src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>
