@@ -3,326 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moving Day — Character Reference Samples (Round 2)</title>
+    <title>Moving Day — Character References (Round 3)</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background: #faf8f5;
-            color: #3a3a3a;
-            line-height: 1.6;
-        }
+        body { font-family: 'Georgia', serif; background: #faf8f5; color: #3a3a3a; line-height: 1.6; }
+        header { background: linear-gradient(135deg, #5b7a6e 0%, #7a9e8e 100%); color: white; text-align: center; padding: 3rem 1.5rem; }
+        header h1 { font-size: 2.2rem; font-weight: 400; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        header p { font-size: 1.1rem; opacity: 0.9; font-style: italic; }
+        .intro { max-width: 760px; margin: 2rem auto; padding: 1.5rem 2rem; text-align: center; font-size: 1.05rem; color: #555; }
 
-        header {
-            background: linear-gradient(135deg, #5b7a6e 0%, #7a9e8e 100%);
-            color: white;
-            text-align: center;
-            padding: 3rem 1.5rem;
-        }
+        /* Tab navigation */
+        .tabs { max-width: 800px; margin: 0 auto 2rem; display: flex; justify-content: center; gap: 0; }
+        .tab-btn { padding: 1rem 2.5rem; font-family: 'Georgia', serif; font-size: 1.1rem; border: 2px solid #d4c9b8; background: #faf8f5; color: #888; cursor: pointer; transition: all 0.2s; }
+        .tab-btn:first-child { border-radius: 8px 0 0 8px; }
+        .tab-btn:last-child { border-radius: 0 8px 8px 0; }
+        .tab-btn.active { background: #5b7a6e; color: white; border-color: #5b7a6e; }
+        .tab-btn:hover:not(.active) { background: #f0ebe3; color: #555; }
 
-        header h1 {
-            font-size: 2.2rem;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-        }
+        .style-desc { max-width: 760px; margin: 0 auto 2rem; text-align: center; font-size: 0.95rem; color: #777; font-style: italic; padding: 0 2rem; }
 
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-style: italic;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        .intro {
-            max-width: 760px;
-            margin: 2rem auto;
-            padding: 1.5rem 2rem;
-            text-align: center;
-            font-size: 1.05rem;
-            color: #555;
-        }
+        .character-section { max-width: 700px; margin: 0 auto 3rem; padding: 0 1.5rem; }
+        .character-section h2 { font-size: 1.5rem; font-weight: 400; color: #5b7a6e; border-bottom: 2px solid #d4c9b8; padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+        .character-section .description { font-size: 0.9rem; color: #999; font-style: italic; margin-bottom: 1rem; }
+        .character-section .img-wrap { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); transition: transform 0.2s; }
+        .character-section .img-wrap:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+        .character-section img { width: 100%; height: auto; display: block; cursor: pointer; }
 
-        .style-explainer {
-            max-width: 800px;
-            margin: 0 auto 2.5rem;
-            padding: 1.5rem 2rem;
-            background: #f0ebe3;
-            border-radius: 10px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .style-explainer .style-box {
-            text-align: center;
-        }
-
-        .style-explainer h3 {
-            color: #5b7a6e;
-            font-size: 1.1rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .style-explainer p {
-            font-size: 0.9rem;
-            color: #777;
-        }
-
-        .character-section {
-            max-width: 1100px;
-            margin: 0 auto 3rem;
-            padding: 0 1.5rem;
-        }
-
-        .character-section h2 {
-            font-size: 1.6rem;
-            font-weight: 400;
-            color: #5b7a6e;
-            border-bottom: 2px solid #d4c9b8;
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .character-section .description {
-            font-size: 0.95rem;
-            color: #777;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-        }
-
-        .samples {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .sample {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease;
-        }
-
-        .sample:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-        }
-
-        .sample img {
-            width: 100%;
-            height: auto;
-            display: block;
-            cursor: pointer;
-        }
-
-        .sample .label {
-            padding: 0.75rem 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-            background: #fafafa;
-            border-top: 1px solid #f0ece6;
-        }
-
-        .sample .label strong {
-            color: #5b7a6e;
-        }
-
-        .sample .label span {
-            color: #999;
-            font-size: 0.85rem;
-        }
-
-        .approved-badge {
-            display: inline-block;
-            background: #5b7a6e;
-            color: white;
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 0.5rem;
-            vertical-align: middle;
-        }
-
-        .approved-section .samples {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .note {
-            max-width: 760px;
-            margin: 2rem auto 3rem;
-            padding: 1.5rem 2rem;
-            background: #f5f0e8;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 0.95rem;
-            color: #666;
-        }
-
+        .note { max-width: 760px; margin: 2rem auto 3rem; padding: 1.5rem 2rem; background: #f5f0e8; border-radius: 8px; text-align: center; font-size: 0.95rem; color: #666; }
         .note strong { color: #5b7a6e; }
+        footer { text-align: center; padding: 2rem; color: #aaa; font-size: 0.85rem; border-top: 1px solid #ece7df; }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: #aaa;
-            font-size: 0.85rem;
-            border-top: 1px solid #ece7df;
-        }
-
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
-        }
-
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; cursor: pointer; align-items: center; justify-content: center; }
         .lightbox.active { display: flex; }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 4px;
-        }
+        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 4px; }
 
         @media (max-width: 640px) {
-            .samples, .style-explainer { grid-template-columns: 1fr; }
             header h1 { font-size: 1.6rem; }
+            .tab-btn { padding: 0.75rem 1.5rem; font-size: 0.95rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Moving Day</h1>
-        <p>Character Reference Samples — Round 2</p>
-    </header>
+<header>
+    <h1>Moving Day</h1>
+    <p>Character References — Round 3</p>
+</header>
 
-    <div class="intro">
-        Hi Alex! Based on your feedback, we've refined the characters and put together 
-        two different illustration styles for you to consider. Take a look and let us know 
-        which direction feels right!
-    </div>
+<div class="intro">
+    Hi Alex! We've put together two complete character sets for your review, each with a slightly different feel. 
+    Use the tabs below to switch between them. <strong>Pick the set that feels right for the book as a whole</strong> — 
+    all five characters in a set are designed to work together.
+</div>
 
-    <div class="style-explainer">
-        <div class="style-box">
-            <h3>Style A — Warm Watercolor</h3>
-            <p>Soft, painterly watercolor with visible brush strokes. A classic children's book feel — warm and rich.</p>
-        </div>
-        <div class="style-box">
-            <h3>Style B — Whimsical Storybook</h3>
-            <p>More playful and stylized. Bigger eyes, simpler features, lighter palette. Captures personality over likeness.</p>
-        </div>
-    </div>
+<div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('setA')">Set A</button>
+    <button class="tab-btn" onclick="switchTab('setB')">Set B</button>
+</div>
 
-    <!-- IDA -->
+<!-- SET A -->
+<div id="setA" class="tab-content active">
+    <p class="style-desc">Rich, warm watercolor with a painterly, detailed feel</p>
+
     <div class="character-section">
         <h2>Ida</h2>
-        <p class="description">Refined from your additional reference photos — younger, curlier hair, full of spirit</p>
-        <div class="samples">
-            <div class="sample">
-                <img src="characters-v3/ida-style-A.png" alt="Ida - Style A" onclick="openLightbox(this)">
-                <div class="label"><strong>Style A</strong> <span>— Warm Watercolor</span></div>
-            </div>
-            <div class="sample">
-                <img src="characters-v3/ida-style-B.png" alt="Ida - Style B" onclick="openLightbox(this)">
-                <div class="label"><strong>Style B</strong> <span>— Whimsical Storybook</span></div>
-            </div>
-        </div>
+        <p class="description">Based on your reference photos</p>
+        <div class="img-wrap"><img src="set-a/ida.png" alt="Ida — Set A" onclick="openLightbox(this)"></div>
     </div>
-
-    <!-- MOM -->
     <div class="character-section">
         <h2>Mom</h2>
-        <p class="description">Younger, softer, slender — dark wavy hair, warm and vibrant</p>
-        <div class="samples">
-            <div class="sample">
-                <img src="characters-v3/mom-style-A.png" alt="Mom - Style A" onclick="openLightbox(this)">
-                <div class="label"><strong>Style A</strong> <span>— Warm Watercolor</span></div>
-            </div>
-            <div class="sample">
-                <img src="characters-v3/mom-style-B.png" alt="Mom - Style B" onclick="openLightbox(this)">
-                <div class="label"><strong>Style B</strong> <span>— Whimsical Storybook</span></div>
-            </div>
-        </div>
+        <p class="description">Younger, softer, slender — dark wavy hair</p>
+        <div class="img-wrap"><img src="set-a/mom.png" alt="Mom — Set A" onclick="openLightbox(this)"></div>
     </div>
-
-    <!-- DAD -->
     <div class="character-section">
         <h2>Dad</h2>
-        <p class="description">Slimmed down, youthful, friendly and approachable</p>
-        <div class="samples">
-            <div class="sample">
-                <img src="characters-v3/dad-style-A.png" alt="Dad - Style A" onclick="openLightbox(this)">
-                <div class="label"><strong>Style A</strong> <span>— Warm Watercolor</span></div>
-            </div>
-            <div class="sample">
-                <img src="characters-v3/dad-style-B.png" alt="Dad - Style B" onclick="openLightbox(this)">
-                <div class="label"><strong>Style B</strong> <span>— Whimsical Storybook</span></div>
-            </div>
-        </div>
+        <p class="description">Lean build, light scruff</p>
+        <div class="img-wrap"><img src="set-a/dad.png" alt="Dad — Set A" onclick="openLightbox(this)"></div>
     </div>
-
-    <!-- CC -->
     <div class="character-section">
         <h2>CC</h2>
-        <p class="description">Blue-nose pit bull — your boy, rendered in both styles</p>
-        <div class="samples">
-            <div class="sample">
-                <img src="characters-v3/cc-style-A.png" alt="CC - Style A" onclick="openLightbox(this)">
-                <div class="label"><strong>Style A</strong> <span>— Warm Watercolor</span></div>
-            </div>
-            <div class="sample">
-                <img src="characters-v3/cc-style-B.png" alt="CC - Style B" onclick="openLightbox(this)">
-                <div class="label"><strong>Style B</strong> <span>— Whimsical Storybook</span></div>
-            </div>
-        </div>
+        <p class="description">Blue-nose pit bull — based on your photo</p>
+        <div class="img-wrap"><img src="set-a/cc.png" alt="CC — Set A" onclick="openLightbox(this)"></div>
     </div>
-
-    <!-- BIPPY -->
     <div class="character-section">
         <h2>Bippy</h2>
-        <p class="description">Everyone's favorite teddy bear, in both styles</p>
-        <div class="samples">
-            <div class="sample">
-                <img src="characters-v3/bippy-style-A.png" alt="Bippy - Style A" onclick="openLightbox(this)">
-                <div class="label"><strong>Style A</strong> <span>— Warm Watercolor</span></div>
-            </div>
-            <div class="sample">
-                <img src="characters-v3/bippy-style-B.png" alt="Bippy - Style B" onclick="openLightbox(this)">
-                <div class="label"><strong>Style B</strong> <span>— Whimsical Storybook</span></div>
-            </div>
-        </div>
+        <p class="description">Everyone's favorite teddy bear</p>
+        <div class="img-wrap"><img src="set-a/bippy.png" alt="Bippy — Set A" onclick="openLightbox(this)"></div>
     </div>
+</div>
 
-    <div class="note">
-        <strong>Which style do you prefer?</strong> You can pick one style for the whole book, 
-        or mix elements — for example, "I like Style A but with the softer faces from Style B." 
-        Once you're happy with the direction, we'll lock in the look and start working through the pages!
+<!-- SET B -->
+<div id="setB" class="tab-content">
+    <p class="style-desc">Soft, luminous watercolor with a gentle storybook warmth</p>
+
+    <div class="character-section">
+        <h2>Ida</h2>
+        <p class="description">Based on your reference photos</p>
+        <div class="img-wrap"><img src="set-b/ida.png" alt="Ida — Set B" onclick="openLightbox(this)"></div>
     </div>
-
-    <footer>
-        Moving Day — Illustrations by Sande Caplin &amp; Associates
-    </footer>
-
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="">
+    <div class="character-section">
+        <h2>Mom</h2>
+        <p class="description">Younger, softer, slender — dark wavy hair</p>
+        <div class="img-wrap"><img src="set-b/mom.png" alt="Mom — Set B" onclick="openLightbox(this)"></div>
     </div>
+    <div class="character-section">
+        <h2>Dad</h2>
+        <p class="description">Lean build, light scruff</p>
+        <div class="img-wrap"><img src="set-b/dad.png" alt="Dad — Set B" onclick="openLightbox(this)"></div>
+    </div>
+    <div class="character-section">
+        <h2>CC</h2>
+        <p class="description">Blue-nose pit bull — based on your photo</p>
+        <div class="img-wrap"><img src="set-b/cc.png" alt="CC — Set B" onclick="openLightbox(this)"></div>
+    </div>
+    <div class="character-section">
+        <h2>Bippy</h2>
+        <p class="description">Everyone's favorite teddy bear</p>
+        <div class="img-wrap"><img src="set-b/bippy.png" alt="Bippy — Set B" onclick="openLightbox(this)"></div>
+    </div>
+</div>
 
-    <script>
-        function openLightbox(el) {
-            document.getElementById('lightbox-img').src = el.src;
-            document.getElementById('lightbox').classList.add('active');
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-        }
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-    </script>
+<div class="note">
+    <strong>Please pick one complete set</strong> — Set A or Set B. The characters within each set are designed 
+    to look consistent together throughout the book. Once you choose a direction, we'll lock it in and get 
+    started on the pages!
+</div>
+
+<footer>Moving Day — Illustrations by Sande Caplin &amp; Associates</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+function switchTab(id) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+}
+function openLightbox(el) {
+    document.getElementById('lightbox-img').src = el.src;
+    document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
 </body>
 </html>
