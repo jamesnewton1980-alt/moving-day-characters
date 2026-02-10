@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moving Day — Character Reference Samples</title>
+    <title>Moving Day — Character Reference Samples (Round 2)</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -35,12 +35,38 @@
         }
 
         .intro {
-            max-width: 720px;
+            max-width: 760px;
             margin: 2rem auto;
             padding: 1.5rem 2rem;
             text-align: center;
             font-size: 1.05rem;
             color: #555;
+        }
+
+        .style-explainer {
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            padding: 1.5rem 2rem;
+            background: #f0ebe3;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .style-explainer .style-box {
+            text-align: center;
+        }
+
+        .style-explainer h3 {
+            color: #5b7a6e;
+            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .style-explainer p {
+            font-size: 0.9rem;
+            color: #777;
         }
 
         .character-section {
@@ -55,7 +81,7 @@
             color: #5b7a6e;
             border-bottom: 2px solid #d4c9b8;
             padding-bottom: 0.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .character-section .description {
@@ -95,13 +121,36 @@
             padding: 0.75rem 1rem;
             text-align: center;
             font-size: 0.9rem;
-            color: #888;
             background: #fafafa;
             border-top: 1px solid #f0ece6;
         }
 
+        .sample .label strong {
+            color: #5b7a6e;
+        }
+
+        .sample .label span {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .approved-badge {
+            display: inline-block;
+            background: #5b7a6e;
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .approved-section .samples {
+            grid-template-columns: 1fr 1fr;
+        }
+
         .note {
-            max-width: 720px;
+            max-width: 760px;
             margin: 2rem auto 3rem;
             padding: 1.5rem 2rem;
             background: #f5f0e8;
@@ -111,9 +160,7 @@
             color: #666;
         }
 
-        .note strong {
-            color: #5b7a6e;
-        }
+        .note strong { color: #5b7a6e; }
 
         footer {
             text-align: center;
@@ -123,7 +170,6 @@
             border-top: 1px solid #ece7df;
         }
 
-        /* Lightbox */
         .lightbox {
             display: none;
             position: fixed;
@@ -136,9 +182,7 @@
             justify-content: center;
         }
 
-        .lightbox.active {
-            display: flex;
-        }
+        .lightbox.active { display: flex; }
 
         .lightbox img {
             max-width: 90%;
@@ -147,11 +191,8 @@
         }
 
         @media (max-width: 640px) {
-            .samples {
-                grid-template-columns: 1fr;
-            }
+            .samples, .style-explainer { grid-template-columns: 1fr; }
             header h1 { font-size: 1.6rem; }
-            .character-section h2 { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -159,28 +200,38 @@
 
     <header>
         <h1>Moving Day</h1>
-        <p>Character Reference Samples</p>
+        <p>Character Reference Samples — Round 2</p>
     </header>
 
     <div class="intro">
-        Hi Alex! Below are the character reference samples for <em>Moving Day</em>, 
-        illustrated in our warm watercolor storybook style. Each character has two 
-        samples showing different poses and expressions. Please take a look and let us 
-        know how you'd like to proceed!
+        Hi Alex! Based on your feedback, we've refined the characters and put together 
+        two different illustration styles for you to consider. Take a look and let us know 
+        which direction feels right!
+    </div>
+
+    <div class="style-explainer">
+        <div class="style-box">
+            <h3>Style A — Warm Watercolor</h3>
+            <p>Soft, painterly watercolor with visible brush strokes. A classic children's book feel — warm and rich.</p>
+        </div>
+        <div class="style-box">
+            <h3>Style B — Whimsical Storybook</h3>
+            <p>More playful and stylized. Bigger eyes, simpler features, lighter palette. Captures personality over likeness.</p>
+        </div>
     </div>
 
     <!-- IDA -->
     <div class="character-section">
         <h2>Ida</h2>
-        <p class="description">Based on the reference photo you shared</p>
+        <p class="description">Refined from your additional reference photos — younger, curlier hair, full of spirit</p>
         <div class="samples">
             <div class="sample">
-                <img src="characters/ida-sample-A.png" alt="Ida - Sample A" onclick="openLightbox(this)">
-                <div class="label">Sample A</div>
+                <img src="characters-v3/ida-style-A.png" alt="Ida - Style A" onclick="openLightbox(this)">
+                <div class="label"><strong>Style A</strong> <span>— Warm Watercolor</span></div>
             </div>
             <div class="sample">
-                <img src="characters/ida-sample-B.png" alt="Ida - Sample B" onclick="openLightbox(this)">
-                <div class="label">Sample B</div>
+                <img src="characters-v3/ida-style-B.png" alt="Ida - Style B" onclick="openLightbox(this)">
+                <div class="label"><strong>Style B</strong> <span>— Whimsical Storybook</span></div>
             </div>
         </div>
     </div>
@@ -188,15 +239,15 @@
     <!-- MOM -->
     <div class="character-section">
         <h2>Mom</h2>
-        <p class="description">Based on the reference photo you shared</p>
+        <p class="description">Younger, softer, slender — dark wavy hair, warm and vibrant</p>
         <div class="samples">
             <div class="sample">
-                <img src="characters/mom-sample-A.png" alt="Mom - Sample A" onclick="openLightbox(this)">
-                <div class="label">Sample A</div>
+                <img src="characters-v3/mom-style-A.png" alt="Mom - Style A" onclick="openLightbox(this)">
+                <div class="label"><strong>Style A</strong> <span>— Warm Watercolor</span></div>
             </div>
             <div class="sample">
-                <img src="characters/mom-sample-B.png" alt="Mom - Sample B" onclick="openLightbox(this)">
-                <div class="label">Sample B</div>
+                <img src="characters-v3/mom-style-B.png" alt="Mom - Style B" onclick="openLightbox(this)">
+                <div class="label"><strong>Style B</strong> <span>— Whimsical Storybook</span></div>
             </div>
         </div>
     </div>
@@ -204,62 +255,61 @@
     <!-- DAD -->
     <div class="character-section">
         <h2>Dad</h2>
-        <p class="description">Illustrated to complement the family — let us know if you'd like any adjustments</p>
+        <p class="description">Slimmed down, youthful, friendly and approachable</p>
         <div class="samples">
             <div class="sample">
-                <img src="characters/dad-sample-A.png" alt="Dad - Sample A" onclick="openLightbox(this)">
-                <div class="label">Sample A</div>
+                <img src="characters-v3/dad-style-A.png" alt="Dad - Style A" onclick="openLightbox(this)">
+                <div class="label"><strong>Style A</strong> <span>— Warm Watercolor</span></div>
             </div>
             <div class="sample">
-                <img src="characters/dad-sample-B.png" alt="Dad - Sample B" onclick="openLightbox(this)">
-                <div class="label">Sample B</div>
+                <img src="characters-v3/dad-style-B.png" alt="Dad - Style B" onclick="openLightbox(this)">
+                <div class="label"><strong>Style B</strong> <span>— Whimsical Storybook</span></div>
             </div>
         </div>
     </div>
 
-    <!-- CC -->
-    <div class="character-section">
-        <h2>CC</h2>
-        <p class="description">Based on the reference photo you shared</p>
+    <!-- CC (approved) -->
+    <div class="character-section approved-section">
+        <h2>CC <span class="approved-badge">✓ Approved</span></h2>
+        <p class="description">Kept from the previous round — you liked these!</p>
         <div class="samples">
             <div class="sample">
                 <img src="characters/cc-sample-A.png" alt="CC - Sample A" onclick="openLightbox(this)">
-                <div class="label">Sample A</div>
+                <div class="label"><strong>Sample A</strong></div>
             </div>
             <div class="sample">
                 <img src="characters/cc-sample-B.png" alt="CC - Sample B" onclick="openLightbox(this)">
-                <div class="label">Sample B</div>
+                <div class="label"><strong>Sample B</strong></div>
             </div>
         </div>
     </div>
 
-    <!-- BIPPY -->
-    <div class="character-section">
-        <h2>Bippy</h2>
-        <p class="description">Refreshed in the unified watercolor style</p>
+    <!-- BIPPY (approved) -->
+    <div class="character-section approved-section">
+        <h2>Bippy <span class="approved-badge">✓ Approved</span></h2>
+        <p class="description">Kept from the previous round</p>
         <div class="samples">
             <div class="sample">
                 <img src="characters/bippy-sample-A.png" alt="Bippy - Sample A" onclick="openLightbox(this)">
-                <div class="label">Sample A</div>
+                <div class="label"><strong>Sample A</strong></div>
             </div>
             <div class="sample">
                 <img src="characters/bippy-sample-B.png" alt="Bippy - Sample B" onclick="openLightbox(this)">
-                <div class="label">Sample B</div>
+                <div class="label"><strong>Sample B</strong></div>
             </div>
         </div>
     </div>
 
     <div class="note">
-        <strong>A quick note:</strong> These samples represent the overall look and feel for each character. 
-        Once you're happy with the direction, we'll use these as the foundation for every page in the book — 
-        ensuring a consistent, cohesive style throughout. If anything needs adjusting, just let us know!
+        <strong>Which style do you prefer?</strong> You can pick one style for the whole book, 
+        or mix elements — for example, "I like Style A but with the softer faces from Style B." 
+        Once you're happy with the direction, we'll lock in the look and start working through the pages!
     </div>
 
     <footer>
-        Moving Day — Illustrations by Sande Caplin & Associates
+        Moving Day — Illustrations by Sande Caplin &amp; Associates
     </footer>
 
-    <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <img id="lightbox-img" src="" alt="">
     </div>
@@ -272,9 +322,7 @@
         function closeLightbox() {
             document.getElementById('lightbox').classList.remove('active');
         }
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeLightbox();
-        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
     </script>
 </body>
 </html>
