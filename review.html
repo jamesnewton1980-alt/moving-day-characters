@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving Day — Page Review (Internal)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', serif; background: #2a2a2a; color: #e0e0e0; line-height: 1.5; }
+        header { background: #1a1a1a; padding: 2rem; text-align: center; border-bottom: 3px solid #5b7a6e; }
+        header h1 { font-size: 2rem; font-weight: 400; color: #fff; letter-spacing: 0.05em; }
+        header p { color: #999; font-style: italic; margin-top: 0.3rem; }
+        .stats { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
+        .stat { text-align: center; }
+        .stat .num { font-size: 2rem; color: #5b7a6e; font-weight: bold; }
+        .stat .label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        .controls { background: #1a1a1a; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #444; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .controls button { padding: 0.5rem 1rem; font-family: Georgia, serif; font-size: 0.85rem; border: 1px solid #555; background: #333; color: #ccc; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+        .controls button:hover, .controls button.active { background: #5b7a6e; color: white; border-color: #5b7a6e; }
+        
+        .spread-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+        
+        .spread { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 3rem; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.4); position: relative; }
+        .spread::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #ddd, #bbb, #ddd); z-index: 2; transform: translateX(-50%); }
+        .spread.single { grid-template-columns: 1fr; }
+        .spread.single::before { display: none; }
+        
+        .page { position: relative; }
+        .page img { width: 100%; height: auto; display: block; }
+        .page-number { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.7); color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.8rem; z-index: 3; }
+        .page-flag { position: absolute; top: 8px; right: 8px; background: rgba(220,50,50,0.85); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; z-index: 3; cursor: pointer; }
+        .page-flag.ok { background: rgba(50,160,80,0.85); }
+        
+        .text-bar { grid-column: 1 / -1; padding: 1rem 1.5rem; background: #f8f6f2; color: #333; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; border-top: 1px solid #eee; }
+        .spread.single .text-bar { grid-template-columns: 1fr; }
+        .text-bar .page-text { font-size: 0.85rem; line-height: 1.6; }
+        .text-bar .page-text .pg-label { font-weight: bold; color: #5b7a6e; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+        
+        .notes-bar { grid-column: 1 / -1; padding: 0.5rem 1.5rem; background: #fff3cd; color: #856404; font-size: 0.8rem; font-style: italic; border-top: 1px solid #ffc107; display: none; }
+        .notes-bar.has-notes { display: block; }
+        
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; cursor: pointer; align-items: center; justify-content: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 4px; }
+
+        @media (max-width: 768px) {
+            .spread { grid-template-columns: 1fr; }
+            .spread::before { display: none; }
+            .text-bar { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Moving Day — Page Review</h1>
+    <p>Internal review copy — 36 pages</p>
+    <div class="stats">
+        <div class="stat"><div class="num">36</div><div class="label">Pages</div></div>
+        <div class="stat"><div class="num">18</div><div class="label">Spreads</div></div>
+        <div class="stat"><div class="num" id="flag-count">0</div><div class="label">Flagged</div></div>
+    </div>
+</header>
+
+<div class="controls">
+    <button onclick="showAll()" class="active" id="btn-all">All Pages</button>
+    <button onclick="showFlagged()" id="btn-flagged">Flagged Only</button>
+    <button onclick="clearFlags()">Clear All Flags</button>
+</div>
+
+<div class="spread-container">
+<div class="spread" data-spread="0">
+  <div class="page" data-page="1">
+    <span class="page-number">Page 1</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 1)" data-flagpage="1">✓</span>
+    <img src="pages-v2/page-01.png" alt="Page 1" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="2">
+    <span class="page-number">Page 2</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 2)" data-flagpage="2">✓</span>
+    <img src="pages-v2/page-02.png" alt="Page 2" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="0"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 1</div>"There, Mom... I have finished packing my last box," said Ida proudly. "Great, Eeedah!" Mom said, laughing.</div>
+    <div class="page-text"><div class="pg-label">Page 2</div>Ida was sad since the family was moving to Toronto, Canada, and Ida would be leaving her good friends behind.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="1">
+  <div class="page" data-page="3">
+    <span class="page-number">Page 3</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 3)" data-flagpage="3">✓</span>
+    <img src="pages-v2/page-03.png" alt="Page 3" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="4">
+    <span class="page-number">Page 4</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 4)" data-flagpage="4">✓</span>
+    <img src="pages-v2/page-04.png" alt="Page 4" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="1"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 3</div>Her Mom had said it would be a new adventure for all. Her Dad had rented a house near a very large park with a playground and trails for walking.</div>
+    <div class="page-text"><div class="pg-label">Page 4</div>From a corner of Ida's room came a soft sobbing sound. It was Bippy, a longtime friend. Tears were running down his cheek, and he was shaking.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="2">
+  <div class="page" data-page="5">
+    <span class="page-number">Page 5</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 5)" data-flagpage="5">✓</span>
+    <img src="pages-v2/page-05.png" alt="Page 5" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="6">
+    <span class="page-number">Page 6</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 6)" data-flagpage="6">✓</span>
+    <img src="pages-v2/page-06.png" alt="Page 6" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="2"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 5</div>Ida gently picked him up and, in a soft voice, said, "Don't cry, Bippy. It will be all right."</div>
+    <div class="page-text"><div class="pg-label">Page 6</div>Bippy said, "I don't want to leave my friends, my school, and my house. It is very scary, and what will life be like in Canada?"</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="3">
+  <div class="page" data-page="7">
+    <span class="page-number">Page 7</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 7)" data-flagpage="7">✓</span>
+    <img src="pages-v2/page-07.png" alt="Page 7" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="8">
+    <span class="page-number">Page 8</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 8)" data-flagpage="8">✓</span>
+    <img src="pages-v2/page-08.png" alt="Page 8" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="3"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 7</div>Ida held him close, and finally Bippy stopped crying. "It will be okay," she said. "Mom and Dad, CC, and I will be there to keep you safe."</div>
+    <div class="page-text"><div class="pg-label">Page 8</div>Bippy felt more comfortable as Ida held his hand, but he still was sad.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="4">
+  <div class="page" data-page="9">
+    <span class="page-number">Page 9</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 9)" data-flagpage="9">✓</span>
+    <img src="pages-v2/page-09.png" alt="Page 9" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="10">
+    <span class="page-number">Page 10</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 10)" data-flagpage="10">✓</span>
+    <img src="pages-v2/page-10.png" alt="Page 10" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="4"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 9</div>Soon it was bedtime. They washed, brushed their teeth, put on pajamas, and climbed into bed.</div>
+    <div class="page-text"><div class="pg-label">Page 10</div>Tomorrow morning they would all be heading to Toronto. Ida was anxious and sad but looked forward to the new home.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="5">
+  <div class="page" data-page="11">
+    <span class="page-number">Page 11</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 11)" data-flagpage="11">✓</span>
+    <img src="pages-v2/page-11.png" alt="Page 11" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="12">
+    <span class="page-number">Page 12</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 12)" data-flagpage="12">✓</span>
+    <img src="pages-v2/page-12.png" alt="Page 12" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="5"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 11</div>She had spoken with her good friend Reid and made plans to speak on FaceTime. Bippy was sound asleep with a big smile on his face.</div>
+    <div class="page-text"><div class="pg-label">Page 12</div>Ida pulled the covers tight and drifted into a deep sleep. "Good morning, chipmunks. Time to get up. We are leaving in a few minutes," Dad said, smiling.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="6">
+  <div class="page" data-page="13">
+    <span class="page-number">Page 13</span>
+    <span class="page-flag" onclick="toggleFlag(this, 13)" data-flagpage="13">Ida age drift</span>
+    <img src="pages-v2/page-13.png" alt="Page 13" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="14">
+    <span class="page-number">Page 14</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 14)" data-flagpage="14">✓</span>
+    <img src="pages-v2/page-14.png" alt="Page 14" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar  has-notes" data-notes-spread="6">P13: Ida age drift</div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 13</div>"Ida," Mom called, "why don't you get Bippy and his little suitcase into the car. Be sure to take your favorite pillow and blanket."</div>
+    <div class="page-text"><div class="pg-label">Page 14</div>Finally, they were on their way. Ida looked back at their house one more time, and Bippy started to cry. CC whimpered.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="7">
+  <div class="page" data-page="15">
+    <span class="page-number">Page 15</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 15)" data-flagpage="15">✓</span>
+    <img src="pages-v2/page-15.png" alt="Page 15" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="16">
+    <span class="page-number">Page 16</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 16)" data-flagpage="16">✓</span>
+    <img src="pages-v2/page-16.png" alt="Page 16" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="7"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 15</div>Ida pulled the blanket tightly around them all, creating a warm, cozy nest.</div>
+    <div class="page-text"><div class="pg-label">Page 16</div>Once on the highway, Bippy was looking out the window and chattering away about the beautiful scenery.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="8">
+  <div class="page" data-page="17">
+    <span class="page-number">Page 17</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 17)" data-flagpage="17">✓</span>
+    <img src="pages-v2/page-17.png" alt="Page 17" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="18">
+    <span class="page-number">Page 18</span>
+    <span class="page-flag" onclick="toggleFlag(this, 18)" data-flagpage="18">Ida too old + wrong seat (front instead of back)</span>
+    <img src="pages-v2/page-18.png" alt="Page 18" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar  has-notes" data-notes-spread="8">P18: Ida too old + wrong seat (front instead of back)</div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 17</div>Ida laughed, and soon both of them were once again under the blanket. Then Bippy looked sad and began to cry.</div>
+    <div class="page-text"><div class="pg-label">Page 18</div>"I don't want to leave! I want my friends," he sobbed. "I am scared of going to a strange house and a strange land!"</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="9">
+  <div class="page" data-page="19">
+    <span class="page-number">Page 19</span>
+    <span class="page-flag" onclick="toggleFlag(this, 19)" data-flagpage="19">Ida too old</span>
+    <img src="pages-v2/page-19.png" alt="Page 19" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="20">
+    <span class="page-number">Page 20</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 20)" data-flagpage="20">✓</span>
+    <img src="pages-v2/page-20.png" alt="Page 20" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar  has-notes" data-notes-spread="9">P19: Ida too old</div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 19</div>"You will be fine. We are all together, and it will be a great adventure," said Ida as she held him closely. Bippy felt a little better and managed a weak smile.</div>
+    <div class="page-text"><div class="pg-label">Page 20</div>"Okay, I will try." Mom called back to them, "We are at the border!"</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="10">
+  <div class="page" data-page="21">
+    <span class="page-number">Page 21</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 21)" data-flagpage="21">✓</span>
+    <img src="pages-v2/page-21.png" alt="Page 21" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="22">
+    <span class="page-number">Page 22</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 22)" data-flagpage="22">✓</span>
+    <img src="pages-v2/page-22.png" alt="Page 22" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="10"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 21</div>A Canadian border guard appeared, smiling, and said, "Welcome to Canada! But first I have to check your car and yourselves."</div>
+    <div class="page-text"><div class="pg-label">Page 22</div>After talking to Mom and completing his inspection, he waved them across, and they were on their way.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="11">
+  <div class="page" data-page="23">
+    <span class="page-number">Page 23</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 23)" data-flagpage="23">✓</span>
+    <img src="pages-v2/page-23.png" alt="Page 23" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="24">
+    <span class="page-number">Page 24</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 24)" data-flagpage="24">✓</span>
+    <img src="pages-v2/page-24.png" alt="Page 24" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="11"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 23</div>The road passed by the big city of Toronto. Bippy and Ida were amazed at the gleaming skyscrapers. It looked like a crystal city.</div>
+    <div class="page-text"><div class="pg-label">Page 24</div>Mom pointed to other areas and said, "Over there is a beautiful aquarium. Next to it is the baseball stadium, and that spire is a tower from the World Fair."</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="12">
+  <div class="page" data-page="25">
+    <span class="page-number">Page 25</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 25)" data-flagpage="25">✓</span>
+    <img src="pages-v2/page-25.png" alt="Page 25" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="26">
+    <span class="page-number">Page 26</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 26)" data-flagpage="26">✓</span>
+    <img src="pages-v2/page-26.png" alt="Page 26" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="12"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 25</div>Bippy and Ida were excited and were looking forward to visiting the aquarium. By the time they arrived at their new home, it was mid-afternoon.</div>
+    <div class="page-text"><div class="pg-label">Page 26</div>Dad was waiting with two men who were unloading the truck. Bippy looked up and said, "This looks just like our old home!" "Yes!" shouted Ida.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="13">
+  <div class="page" data-page="27">
+    <span class="page-number">Page 27</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 27)" data-flagpage="27">✓</span>
+    <img src="pages-v2/page-27.png" alt="Page 27" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="28">
+    <span class="page-number">Page 28</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 28)" data-flagpage="28">✓</span>
+    <img src="pages-v2/page-28.png" alt="Page 28" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="13"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 27</div>"It has a porch, a yard, and look over there!" There, stretching as far as he could see, was a big park.</div>
+    <div class="page-text"><div class="pg-label">Page 28</div>Inside the house, the rooms were a bit smaller than their old home but familiar. Ida and Bippy ran upstairs to see their bedroom.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="14">
+  <div class="page" data-page="29">
+    <span class="page-number">Page 29</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 29)" data-flagpage="29">✓</span>
+    <img src="pages-v2/page-29.png" alt="Page 29" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="30">
+    <span class="page-number">Page 30</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 30)" data-flagpage="30">✓</span>
+    <img src="pages-v2/page-30.png" alt="Page 30" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="14"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 29</div>Dad had placed all of their furniture into the room. "Look," they said to each other, "it is exactly like our old room!"</div>
+    <div class="page-text"><div class="pg-label">Page 30</div>Mom came upstairs, and Dad followed. Seeing them, Ida and Bippy gave them a big hug, saying, "Thank you."</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="15">
+  <div class="page" data-page="31">
+    <span class="page-number">Page 31</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 31)" data-flagpage="31">✓</span>
+    <img src="pages-v2/page-31.png" alt="Page 31" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="32">
+    <span class="page-number">Page 32</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 32)" data-flagpage="32">✓</span>
+    <img src="pages-v2/page-32.png" alt="Page 32" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="15"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 31</div>It was a little before dinnertime when an unexpected thunderstorm appeared and just as quickly disappeared.</div>
+    <div class="page-text"><div class="pg-label">Page 32</div>Ida grabbed Bippy by the hand and said, "Let's go see the yard!" CC barked in agreement, and they all ran to the back door.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="16">
+  <div class="page" data-page="33">
+    <span class="page-number">Page 33</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 33)" data-flagpage="33">✓</span>
+    <img src="pages-v2/page-33.png" alt="Page 33" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="34">
+    <span class="page-number">Page 34</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 34)" data-flagpage="34">✓</span>
+    <img src="pages-v2/page-34.png" alt="Page 34" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="16"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 33</div>The three of them walked down three steps into the grassy yard. Ida and Bippy stopped short and let out a loud, "WOW!"</div>
+    <div class="page-text"><div class="pg-label">Page 34</div>"Oh my goodness!" said Ida. "It is beautiful!" Bippy shouted. CC even stopped and looked up.</div>
+  </div>
+</div>
+
+<div class="spread" data-spread="17">
+  <div class="page" data-page="35">
+    <span class="page-number">Page 35</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 35)" data-flagpage="35">✓</span>
+    <img src="pages-v2/page-35.png" alt="Page 35" onclick="openLightbox(this)">
+  </div>
+  <div class="page" data-page="36">
+    <span class="page-number">Page 36</span>
+    <span class="page-flag ok" onclick="toggleFlag(this, 36)" data-flagpage="36">✓</span>
+    <img src="pages-v2/page-36.png" alt="Page 36" onclick="openLightbox(this)">
+  </div>
+  <div class="notes-bar" data-notes-spread="17"></div>
+  <div class="text-bar">
+    <div class="page-text"><div class="pg-label">Page 35</div>There in the east was a huge, beautifully formed, brightly colored double rainbow arching across the sky.</div>
+    <div class="page-text"><div class="pg-label">Page 36</div>Bippy and Ida held hands. CC sat in front of them. Mom and Dad stood behind them, smiling. They all knew that this was now their new home, and it would be wonderful.</div>
+  </div>
+</div>
+
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+const flags = JSON.parse(localStorage.getItem('movingday-flags') || '{}');
+updateFlags();
+
+function toggleFlag(el, pageNum) {
+    if (flags[pageNum]) {
+        delete flags[pageNum];
+        el.classList.add('ok');
+        el.textContent = '✓';
+    } else {
+        const note = prompt('Flag note for page ' + pageNum + ':', '');
+        if (note !== null) {
+            flags[pageNum] = note || 'needs review';
+            el.classList.remove('ok');
+            el.textContent = flags[pageNum];
+        }
+    }
+    localStorage.setItem('movingday-flags', JSON.stringify(flags));
+    updateFlags();
+}
+
+function updateFlags() {
+    document.getElementById('flag-count').textContent = Object.keys(flags).length;
+    document.querySelectorAll('.page-flag').forEach(el => {
+        const pn = el.dataset.flagpage;
+        if (flags[pn]) {
+            el.classList.remove('ok');
+            el.textContent = flags[pn];
+        }
+    });
+}
+
+function showAll() {
+    document.querySelectorAll('.spread').forEach(s => s.style.display = '');
+    document.getElementById('btn-all').classList.add('active');
+    document.getElementById('btn-flagged').classList.remove('active');
+}
+
+function showFlagged() {
+    const flaggedPages = new Set(Object.keys(flags).map(Number));
+    document.querySelectorAll('.spread').forEach(s => {
+        const pages = s.querySelectorAll('.page');
+        const hasFlagged = Array.from(pages).some(p => flaggedPages.has(Number(p.dataset.page)));
+        s.style.display = hasFlagged ? '' : 'none';
+    });
+    document.getElementById('btn-flagged').classList.add('active');
+    document.getElementById('btn-all').classList.remove('active');
+}
+
+function clearFlags() {
+    if (confirm('Clear all flags?')) {
+        Object.keys(flags).forEach(k => delete flags[k]);
+        localStorage.setItem('movingday-flags', JSON.stringify(flags));
+        document.querySelectorAll('.page-flag').forEach(el => { el.classList.add('ok'); el.textContent = '✓'; });
+        updateFlags();
+        showAll();
+    }
+}
+
+function openLightbox(el) {
+    document.getElementById('lightbox-img').src = el.src;
+    document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
